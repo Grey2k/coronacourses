@@ -16,6 +16,7 @@ setup(name="coronacourses_api",
                         "djangorestframework>=3.11.0<4",
                         "markdown>=3.2.1<4", # Support for doc
                         "coreapi>=2.3.3<4",
-                        "Pygments>=2.6.1<3"
+                        "Pygments>=2.6.1<3",
+                        "channels>=2.4.0<3"
       ]
 )
