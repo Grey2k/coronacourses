@@ -10,4 +10,5 @@ RUN rm -rf venv && \
     pip install --upgrade .
 
 # Export
-CMD ["./"]
+CMD ["./startup.sh"]
+EXPOSE 8080
