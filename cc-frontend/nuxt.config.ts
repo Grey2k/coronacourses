@@ -23,7 +23,7 @@ export default {
 
   watch: ['./graphql/**/*.ts'],
 
-  serverMiddleware: [{path: '/ping', handler: '~/api/healthcheck.js'}],
+  serverMiddleware: [{ path: '/ping', handler: '~/api/healthcheck.js' }],
 
   build: {
     plugins: [new VuetifyLoaderPlugin()],
@@ -33,7 +33,7 @@ export default {
       sass: sassLoaderOptions,
     },
     // Transform asset urls for v-img.
-    extend(webpackConfig, {isDev, isClient, loaders: {vue}}) {
+    extend(webpackConfig, { isDev, isClient, loaders: { vue } }) {
       // Produce source maps in dev mode for debugging.
       if (isDev) {
         webpackConfig.devtool = 'source-map'
@@ -48,14 +48,9 @@ export default {
 
   // https://vuetifyjs.com/en/guides/a-la-carte
   // Vuetify main styles.
-  css: [
-    'vuetify/src/styles/main.sass',
-    '~/assets/scrollbar.sass',
-  ],
+  css: ['vuetify/src/styles/main.sass', '~/assets/scrollbar.sass'],
 
-  plugins: [
-    '~/plugins/vuetify.ts',
-  ],
+  plugins: ['~/plugins/vuetify.ts'],
 
   modules: [
     // 'cookie-universal-nuxt',
@@ -82,17 +77,16 @@ export default {
       {
         name: 'viewport',
         content:
-            'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+          'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
       },
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
         href:
-            'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons',
+          'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons',
       },
     ],
-
-  }
+  },
 }
