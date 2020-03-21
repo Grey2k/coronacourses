@@ -23,6 +23,7 @@ from .websocket import routing as ws_routing
 
 urlpatterns = [
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path("api/", include("coronacourses_api.rest.urls"))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

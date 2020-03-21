@@ -6,7 +6,7 @@ import os
 
 
 def _gen_course_id():
-    return base64.urlsafe_b64encode(os.urandom(16))[:16]
+    return base64.urlsafe_b64encode(os.urandom(16))[:16].decode()
 
 
 class Course(models.Model):
@@ -15,6 +15,13 @@ class Course(models.Model):
     kind = models.TextField()
     lecturer = models.TextField()
     description = models.TextField()
+
+    def is_owner(self, user):
+        tmp = list(CourseMaintainer.objects.filter(user=user, course=self))
+        if len(tmp) > 0:
+            return True
+        else:
+            return False
 
 
 class CourseMaintainer(models.Model):
