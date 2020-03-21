@@ -22,10 +22,21 @@ services:
             coronacourses:
                 aliases:
                     - redis
+    frontend:
+        build: cc-frontend
+        restart: always
+        networks:
+            coronacourses:
+                aliases:
+                    - frontend
+        environment:
+            - HOST=0.0.0.0
+            - HOST_PORT=3000
     server:
         build: docker
         depends_on:
             - api_backend
+            - frontend
         networks:
             coronacourses:
         restart: always
