@@ -2,11 +2,16 @@
 
 from setuptools import setup, find_packages
 
+
+packages = list(filter(lambda x: x.startswith(
+    "coronacourses_api"), find_packages()))
+
+
 setup(name="coronacourses_api",
       version="0.1",
       description="API backend for CoronaCourses",
       url="https://github.com/jjegg01/coronacourses",
-      packages=find_packages("coronacourses_api"),
+      packages=packages,
       install_requires=["django>=3.0<4",
                         "djangorestframework>=3.11.0<4",
                         "markdown>=3.2.1<4", # Support for doc
