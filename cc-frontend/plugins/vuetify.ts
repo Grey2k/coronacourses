@@ -12,7 +12,7 @@ import LRU from 'lru-cache'
 
 const themeCache = new LRU({
   max: 10,
-  maxAge: 1000 * 60 * 60 // 1 hour
+  maxAge: 1000 * 60 * 60, // 1 hour
 })
 
 Vue.use(Vuetify)
@@ -24,20 +24,23 @@ export default (ctx: Context) => {
   if (cookies !== undefined) {
     const darkModeCookie = cookies
       .split('; ')
-      .find((cookie) => cookie.split('=')[0] === 'dark-mode')
+      .find(cookie => cookie.split('=')[0] === 'dark-mode')
 
-    if (darkModeCookie && darkModeCookie.split('=')[1] === 'false') {
-      darkModeEnabled = false
+    if (
+      darkModeCookie &&
+      darkModeCookie.split('=')[1] === `${!darkModeEnabled}`
+    ) {
+      darkModeEnabled = !darkModeEnabled
     }
   }
 
   ctx.app.vuetify = new Vuetify({
     lang: {
       locales: { de },
-      current: 'de'
+      current: 'de',
     },
     icons: {
-      iconfont: 'fa'
+      iconfont: 'fa',
     },
     theme: {
       dark: darkModeEnabled,
@@ -50,7 +53,7 @@ export default (ctx: Context) => {
           warning: colors.orange.accent3,
           info: colors.lightBlue.darken2,
           success: colors.green.accent4,
-          link: colors.red.lighten1
+          link: colors.red.lighten1,
         },
         light: {
           primary: colors.blue.base,
@@ -60,8 +63,8 @@ export default (ctx: Context) => {
           warning: colors.orange.accent3,
           info: colors.lightBlue.darken2,
           success: colors.green.accent4,
-          link: colors.red.lighten1
-        }
+          link: colors.red.lighten1,
+        },
       },
       options: {
         themeCache,
@@ -70,8 +73,8 @@ export default (ctx: Context) => {
             ? css.replace(/[\r\n|\r|\n]/g, '')
             : css
         },
-        customProperties: true
-      }
-    }
+        customProperties: true,
+      },
+    },
   })
 }
