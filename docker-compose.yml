@@ -1,0 +1,21 @@
+version: "3"
+
+networks:
+    coronacourses:
+
+services:
+    api_backend:
+        build: api_backend
+        restart: always
+        networks:
+            coronacourses:
+                aliases:
+                    - api
+        depends_on:
+            - redis
+    redis:
+        image: redis
+        networks:
+            coronacourses:
+                aliases:
+                    - redis
