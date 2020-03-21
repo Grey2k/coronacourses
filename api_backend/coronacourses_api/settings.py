@@ -31,10 +31,10 @@ except KeyError:
 
 
 def _get_conf(name: str, default: str = None):
-    if name in _conf_ccapi:
-        return _conf_ccapi[name]
-    elif ("CCAPI_" + name).upper() in os.environ:
+    if ("CCAPI_" + name).upper() in os.environ:
         return os.environ[("CCAPI_" + name).upper()]
+    elif name in _conf_ccapi:
+        return _conf_ccapi[name]
     else:
         return default
 
@@ -55,6 +55,9 @@ ALLOWED_HOSTS = _get_conf("AllowedHosts", ["*"])
 # Application definition
 
 INSTALLED_APPS = [
+    "channels",
+    "coronacourses_api.websocket",
+    "coronacourses_api.rest",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,6 +77,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'coronacourses_api.urls'
+ASGI_APPLICATION = "coronacourses_api.urls.application"
 
 TEMPLATES = [
     {
