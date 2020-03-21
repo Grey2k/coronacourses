@@ -1,0 +1,18 @@
+ccAPI:
+    SecretKey: "<INSERT-SECRET-KEY-HERE>" # The secret key
+    Debug: False # Should use debug
+
+    # Database
+    dbType: sqlite3 # Supports: "sqlite3", "mysql", "postgresql" and "oracle"
+    # Database options for sqlite3
+    dbFile: db.sqlite3 # File for sqlite3
+    # Database options for mysql, postgresql and oracle
+    dbHost: "" # Database host
+    dbPort: "" # Database port
+    dbUser: "ccapi" # Username for the db
+    dbPW: "" # Password for the user of the db
+    dbName: "ccapi" # Database name
+
+    # Hosts
+    AllowedHosts:
+        - "*"

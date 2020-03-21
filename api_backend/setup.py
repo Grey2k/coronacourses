@@ -17,6 +17,7 @@ setup(name="coronacourses_api",
                         "markdown>=3.2.1<4", # Support for doc
                         "coreapi>=2.3.3<4",
                         "Pygments>=2.6.1<3",
-                        "channels>=2.4.0<3"
+                        "channels>=2.4.0<3",
+                        "PyYAML>=5.3.1<6"
       ]
 )

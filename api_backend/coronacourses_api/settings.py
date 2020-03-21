@@ -11,21 +11,45 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import yaml
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+# Config loader
+try:
+    with open(os.path.join(BASE_DIR, "data", "config.yml"), "r") as _file:
+        config = yaml.load(_file, Loader=yaml.SafeLoader)
+except FileNotFoundError:
+    config = {}
+
+try:
+    _conf_ccapi = config["ccAPI"]
+except KeyError:
+    _conf_ccapi = {}
+
+
+def _get_conf(name: str, default: str = None):
+    if name in _conf_ccapi:
+        return _conf_ccapi[name]
+    elif ("CCAPI_" + name).upper() in os.environ:
+        return os.environ[("CCAPI_" + name).upper()]
+    else:
+        return default
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'tsb%!&a$z_z1i&mzxxxi7=swyxrtr(wfoi5-j)aucg4t$6(^gf'
+if _get_conf("SecretKey") not in (None, "<INSERT-SECRET-KEY-HERE>"):
+    SECRET_KEY = _get_conf("SecretKey")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(_get_conf("Debug")) if _get_conf("Debug") is not None else False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = _get_conf("AllowedHosts", ["*"])
 
 
 # Application definition
@@ -72,14 +96,49 @@ WSGI_APPLICATION = 'coronacourses_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if _get_conf("dbType") in (None, "sqlite3"):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': _get_conf("dbFile", os.path.join(BASE_DIR, "data", "db.sqlite3"))
+        }
     }
-}
-
+elif _get_conf("dbType") == "mysql":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': _get_conf("dbHost", ""),
+            'PORT': _get_conf("dbPort", ""),
+            'USER': _get_conf("dbUser", "ccapi"),
+            'PASSWORD': _get_conf("dbPW", ""),
+            'NAME': _get_conf("dbName", "ccapi")
+        }
+    }
+elif _get_conf("dbType") == "postgresql":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': _get_conf("dbHost", ""),
+            'PORT': _get_conf("dbPort", ""),
+            'USER': _get_conf("dbUser", "ccapi"),
+            'PASSWORD': _get_conf("dbPW", ""),
+            'NAME': _get_conf("dbName", "ccapi")
+        }
+    }
+elif _get_conf("dbType") == "oracle":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.oracle',
+            'HOST': _get_conf("dbHost", ""),
+            'PORT': _get_conf("dbPort", ""),
+            'USER': _get_conf("dbUser", "ccapi"),
+            'PASSWORD': _get_conf("dbPW", ""),
+            'NAME': _get_conf("dbName", "ccapi")
+        }
+    }
+else:
+    raise RuntimeError("Unknown db_type " +
+                       repr(_get_conf("dbType")) + " in config file.")
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
