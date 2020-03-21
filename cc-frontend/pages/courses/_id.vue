@@ -141,7 +141,7 @@ export default class UserOverviewPage extends Vue {
     this.chatSocket = new WebSocket(`wss://${url}/ws/chat/${this.courseId}`)
 
     this.chatSocket.onmessage = e => {
-      const { data } = JSON.parse(e)
+      const data = JSON.parse(e.data)
       console.log(data)
     }
 
