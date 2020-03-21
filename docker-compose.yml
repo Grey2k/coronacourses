@@ -1,0 +1,13 @@
+version: "3"
+
+networks:
+    coronacourses:
+
+services:
+    api_backend:
+        build: api_backend
+        restart: always
+        networks:
+            coronacourses:
+                aliases:
+                    - api
