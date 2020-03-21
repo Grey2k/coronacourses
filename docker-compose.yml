@@ -13,9 +13,23 @@ services:
                     - api
         depends_on:
             - redis
+        environment:
+            - CCAPI_SECRETKEY=123456789
+            - CCAPI_DEBUG=True
     redis:
         image: redis
         networks:
             coronacourses:
                 aliases:
                     - redis
+    server:
+        build: docker
+        depends_on:
+            - api_backend
+        networks:
+            coronacourses:
+        restart: always
+        environment:
+            - HTTP_PORT=80
+        ports:
+            - 8081:80
