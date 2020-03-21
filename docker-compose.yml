@@ -33,7 +33,7 @@ services:
             - HOST=0.0.0.0
             - HOST_PORT=3000
     server:
-        build: docker
+        build: docker/http
         depends_on:
             - api_backend
             - frontend
