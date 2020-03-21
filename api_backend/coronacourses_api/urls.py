@@ -15,13 +15,14 @@ Including another URLconf
 """
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
 from .websocket import routing as ws_routing
 
 urlpatterns = [
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

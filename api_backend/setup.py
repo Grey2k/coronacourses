@@ -19,6 +19,7 @@ setup(name="coronacourses_api",
                         "Pygments>=2.6.1<3",
                         "channels>=2.4.0<3",
                         "PyYAML>=5.3.1<6",
-                        "channels_redis>=2.4.2<3"
+                        "channels_redis>=2.4.2<3",
+                        "django-oauth-toolkit>=1.3.0<2"
       ]
 )

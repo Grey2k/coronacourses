@@ -55,9 +55,11 @@ ALLOWED_HOSTS = _get_conf("AllowedHosts", ["*"])
 # Application definition
 
 INSTALLED_APPS = [
+    "coronacourses_api.rest",
+    'oauth2_provider',
+    'rest_framework',
     "channels",
     "coronacourses_api.websocket",
-    "coronacourses_api.rest",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
