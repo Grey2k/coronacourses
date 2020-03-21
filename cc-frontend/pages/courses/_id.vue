@@ -137,8 +137,11 @@ export default class UserOverviewPage extends Vue {
   public mounted() {
     this.courseId = this.$route.params.id
 
-    const url = 'localhost:3000'
-    this.chatSocket = new WebSocket(`wss://${url}/ws/chat/${this.courseId}`)
+    this.chatSocket = new WebSocket(
+      `${location.protocol === 'https:' ? 'wss' : 'ws'}://${
+        window.location.host
+      }/ws/chat/${this.courseId}`
+    )
 
     this.chatSocket.onmessage = e => {
       const data = JSON.parse(e.data)
