@@ -15,18 +15,14 @@ class Course(models.Model):
     kind = models.TextField()
     lecturer = models.TextField()
     description = models.TextField()
+    admins = models.ManyToManyField(User)
 
     def is_owner(self, user):
-        tmp = list(CourseMaintainer.objects.filter(user=user, course=self))
+        tmp = list(Course.objects.filter(admins=user))
         if len(tmp) > 0:
             return True
         else:
             return False
-
-
-class CourseMaintainer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
 
 class PDFSlide(models.Model):
