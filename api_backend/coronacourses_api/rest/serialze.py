@@ -14,5 +14,6 @@ class CourseSerializer(serializers.HyperlinkedModelSerializer):
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta():
         model = User
-        fields = ["id"]
-    id = serializers.IntegerField()
+        fields = ["id", "username"]
+    id = serializers.IntegerField(read_only=True)
+    username = serializers.ReadOnlyField()
